@@ -5,4 +5,7 @@ CANVAS_HEIGHT = 250;
 DATABASE_NAME = 'RFDB';
 DATABASE_USERNAME = 'kangyang';
 DATABASE_PASSWORD = '123456';
-%%
+%% data path
+BASE_PATH = 'D:\grad\data\';
+%% filtered data path
+FILTERED_PATH = 'D:\grad\filter\';

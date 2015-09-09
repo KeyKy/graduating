@@ -1,7 +1,7 @@
-function batchShowCase()
+function batchInsert()
 addConstVar;
 
-basePath = 'D:\grad\processingCaoBinData\data\';
+basePath = BASE_PATH;
 prefix = 'userSketch';
 postfix = '_chooseModel\';
 frontPath = sprintf('%s%s%s%s',basePath, prefix, 'front', postfix);
