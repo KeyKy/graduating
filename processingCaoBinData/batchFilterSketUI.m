@@ -52,8 +52,6 @@ for files_idx = 3 : front_files_names_num
     hold off;
 end
 
-
-
 hold off;
 end
 

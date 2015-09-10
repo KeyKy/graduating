@@ -6,6 +6,6 @@ DATABASE_NAME = 'RFDB';
 DATABASE_USERNAME = 'kangyang';
 DATABASE_PASSWORD = '123456';
 %% data path
-BASE_PATH = 'D:\grad\data\';
+BASE_PATH = 'E:\graduating\data\';
 %% filtered data path
-FILTERED_PATH = 'D:\grad\filter\';
+FILTERED_PATH = 'E:\graduating\filter\';
