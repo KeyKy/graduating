@@ -1,0 +1,4 @@
+BASE_PATH = 'D:\\projections\\';
+
+SAMPLE_STEP = 10;
+IMAGE_EDGE_LENGTH = 200;
