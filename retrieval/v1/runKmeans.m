@@ -1,4 +1,4 @@
-function [center, assignment, others] = runKmeans(designMatrix, k)
+function [center, assignment, others] = runKmeans(designMatrix, parms)
 % IDX = kmeans(X,k) partitions the points in the n-by-p data matrix X into k clusters.
 % kmeans returns an n-by-1 vector IDX containing the cluster indices of each point.
 % [IDX,C] = kmeans(X,k) returns the k cluster centroid locations in the k-by-p matrix C.
@@ -8,7 +8,7 @@ function [center, assignment, others] = runKmeans(designMatrix, k)
 % dim of feature.
 % Output others is statistics value. for kmeans is sumd, D and so on.
 
-[assignment, center, sumd, D] = kmeans(designMatrix, k);
+[assignment, center, sumd, D] = kmeans(designMatrix, parms{1});
 others = {};
 others{1} = sumd;
 others{2} = D;

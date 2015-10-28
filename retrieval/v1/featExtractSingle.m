@@ -1,4 +1,4 @@
-function [feats, n_contsamp, n_contsamp_of_conn_cont_mat] = featExtractSingle(path)
+function [feats, articu_cont, n_contsamp, n_contsamp_of_conn_cont_mat] = featExtractSingle(path)
 globalVar;
 sample_step = SAMPLE_STEP;
 imgEdgeLength = IMAGE_EDGE_LENGTH;
