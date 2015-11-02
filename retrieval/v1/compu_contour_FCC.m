@@ -1,4 +1,4 @@
-function  c = fcc(b, conn, dir) 
+function  c = compu_contour_FCC(b, conn, dir) 
 %FCHCODE Computes the Freeman chain code of a boundary. 
 %   C = FCHCODE(B) computes the 8-connected Freeman chain code of a 
 %   set of 2-D coordinate pairs contained in B, an np-by-2 array. C 

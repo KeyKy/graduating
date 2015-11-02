@@ -6,5 +6,8 @@ featGlobalVar;
 [SC_feats, euclid_dist_mat, ang_mat] = compu_contour_SC( articu_cont, n_dist, n_theta, bTangent);
 
 %% 计算傅里叶描述子
+%[FD_feats] = compu_contour_FD(eight_conn_pixel_points, sizeOfFD);
 
+%% 计算Freeman Chain Code
+[FCC_feats] = compu_contour_FCC(eight_conn_pixel_points);
 end
