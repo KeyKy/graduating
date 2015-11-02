@@ -1,19 +1,20 @@
 function offLineFeatures(path)
 % path 投影图图片的绝对路径
 
-if 0 %提取特征
+%提取特征
 BASE_PATH = 'D:\\projections\\test\\';
 [total_feats, total_articu_cont, total_n_contsamp, total_n_contsamp_of_conn_cont_mat, total_filesName, multiContour] = genFeatBatch(BASE_PATH); % calc feats
 
 %saveInDatabase(total_feats, total_articu_cont, total_n_contsamp,total_filesName); % save in database
 
-save 'E:\\graduating\\data\\total_feats.mat' total_feats  %save in matrix
-save 'E:\\graduating\\data\\total_n_contsamp.mat' total_n_contsamp
-save 'E:\\graduating\\data\\total_n_contsamp_of_conn_cont_mat.mat' total_n_contsamp_of_conn_cont_mat
-save 'E:\\graduating\\data\\total_filesName.mat' total_filesName
-save 'E:\\graduating\\data\\multiContour.mat' multiContour
-end
+%save 'E:\\graduating\\data\\total_feats.mat' total_feats  %save in matrix
+%save 'E:\\graduating\\data\\total_n_contsamp.mat' total_n_contsamp
+%save 'E:\\graduating\\data\\total_n_contsamp_of_conn_cont_mat.mat' total_n_contsamp_of_conn_cont_mat
+%save 'E:\\graduating\\data\\total_filesName.mat' total_filesName
+%save 'E:\\graduating\\data\\multiContour.mat' multiContour
 
+
+if 0
 %降维 
 disp('begin reduction');
 load 'E:\\graduating\\data\\total_feats.mat' total_feats %load from matrix
@@ -22,11 +23,10 @@ load 'E:\\graduating\\data\\total_n_contsamp_of_conn_cont_mat.mat' total_n_conts
 load 'E:\\graduating\\data\\total_filesName.mat' total_filesName
 
 designMatrix = total_feats'; 
-%options.ReducedDim = 2;
 options.PCARatio = 0.7;
 [reducedDesignMatrix,eigvector] = dimReduction(designMatrix, 'pca', options);
 
-save 'E:\\graduating\\data\\eigvector.mat' eigvector
+save 'E:\\graduating\\data\\eigvector.mat' eigvector %save transformation
 
 disp('begin clustring'); % k-means
 methodName = 'kmeans-euclidean'; parms{1} = 8; clusterDesignMatrix = reducedDesignMatrix;
@@ -47,11 +47,14 @@ load 'E:\\graduating\\data\\assignment.mat' assignment
 
 disp('save in table model');
 saveFeatureInDatabase(histograms,total_filesName);
-
+end
 end
 
 function [total_feats, total_articu_cont, total_n_contsamp, total_n_contsamp_of_conn_cont_mat, total_filesName, multiContour] = genFeatBatch(path)
 files = dir(path);
+globalVar;
+sample_step = SAMPLE_STEP;
+imgEdgeLength = IMAGE_EDGE_LENGTH;
 
 total_filesName = {};
 total_feats = [];
@@ -64,7 +67,14 @@ for i = 3 : length(files)
     projImgPath = sprintf('%s%s', path, files(i).name);
     disp(files(i).name);
     total_filesName{end+1} = files(i).name;
-    [the_feats, the_articu_cont, the_n_contsamp, the_n_contsamp_of_conn_cont_mat] = featExtractSingle(projImgPath);
+    
+    %特征提取包括三部分预处理、采样点提取、特征提取
+    [image, boundImg, rescaleImg, rescaleBinaryImg, fixExpandImg, filledFixExpandImg] = preprocessProjImage(projImgPath, imgEdgeLength);
+    perimeter = bwperim(filledFixExpandImg); imshow(perimeter);boundries = bwboundaries(perimeter, 'noholes'); eight_conn_pixel_points = extBdPoints(boundries);
+    
+    [Contours, the_articu_cont, the_n_contsamp, the_n_contsamp_of_conn_cont_mat, adjacencyList] = downSampleContour(filledFixExpandImg, sample_step);
+    [the_feats] = extractFeature(articu_cont, eight_conn_pixel_points);
+
     total_feats = [total_feats the_feats];
     total_articu_cont = [total_articu_cont the_articu_cont'];
     total_n_contsamp = [total_n_contsamp the_n_contsamp];

@@ -1,6 +1,6 @@
 function [Cs]=boundary_extract_binary(im)
 
-c		= contourc(im,[0.8,0.8]);
+c		= contourc(im,[0.8 0.8]);
 len_c	= size(c,2);
 
 if len_c>0

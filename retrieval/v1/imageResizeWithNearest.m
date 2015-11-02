@@ -2,7 +2,7 @@ function resizedImg = imageResizeWithNearest(boxImg)
 [height,width] = size(boxImg);
 maximun = max([height,width]);
 if maximun ~= 0
-    scaleFactor = 190.0 / maximun;
+    scaleFactor = 150.0 / maximun;
     %scaleFactor = 380.0 / maximun;
     resizedImg = imresize(boxImg, scaleFactor, 'nearest');
 else

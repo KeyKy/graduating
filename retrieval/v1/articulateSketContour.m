@@ -1,24 +1,14 @@
-function [articu_cont, n_contsamp, n_contsamp_of_conn_cont_mat, adjacencyList] = articulateContour(Contours, samp_step_length)
-% articu_cont 一个数组保存清晰化后的坐标值
-% n_contsamp 总共有多少采样点
-% n_contsamp_of_conn_cont_mat Contours中每一段采样点的个数
+function [articu_cont, n_contsamp, n_contsamp_of_conn_cont_mat, adjacencyList] = articulateSketContour( Contours, samp_step_length )
 articu_cont = []; 
 n_contsamp = 0;
 n_contsamp_of_conn_cont_mat = zeros(length(Contours), 1);
 adjacencyList = [];
+
 for conn_cont_idx = 1 : length(Contours)
-    %获得该段Contour的x,y坐标
     the_articu_cont = Contours{conn_cont_idx}';
     
-    % remove redundant point in contours
-    the_articu_cont		= [the_articu_cont; the_articu_cont(1,:)];
-    dif_cont	= abs(diff(the_articu_cont,1,1));
-    id_gd		= find(sum(dif_cont,2)>0.001); %找到距离超过0.001的那些sample点，保留
-    the_articu_cont		= the_articu_cont(id_gd,:);
-    
-    % start from top left
     [min_v,id]	= min(the_articu_cont(:,2)+the_articu_cont(:,1));
-    the_articu_cont		= circshift(the_articu_cont,[length(the_articu_cont)-id+1]); %将最左上的像素点坐标滚动到第一个
+    the_articu_cont		= circshift(the_articu_cont,[length(the_articu_cont)-id+1]);
     
     % 通过采样前contour长度，以及samp_step_length采样步长参数，来计算对于该轮廓合适的采样点总数
     [redundancy_removed_cur_cont_length  col_size] = size(the_articu_cont);
@@ -65,6 +55,11 @@ for conn_cont_idx = 1 : length(Contours)
     % 累加 n_contsamp
     n_contsamp = n_contsamp + num_of_samp_pts;
 end
+
+%for i = 1 : length(articu_cont)
+%    plot(articu_cont(i,1), 250 - articu_cont(i,2), '.'); hold on;
+%    text(articu_cont(i,1), 250 - articu_cont(i,2), num2str(i)); hold on;
+%end
 
 end
 

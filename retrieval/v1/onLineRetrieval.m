@@ -1,4 +1,4 @@
-function [ rank ] = onLineRetrieval( sketchOrPath )
+function [ rank ] = onLineRetrieval( sketchOrPath, strokeSeq )
 if ~exist('sketchOrPath', 'var')
     sketchOrPath = 'E:\graduating\data\sket1.png';
 end
@@ -42,10 +42,9 @@ boundImg = imageBoxBounding(image);
 rescaleImg = imageResizeWithNearest(boundImg);
 rescaleBinaryImg = imageRescaledBinaryzation(rescaleImg, 0.8);
 fixExpandImg = imageBoundaryExpandFixSize(rescaleBinaryImg, 200, 200);
-filledFixExpandImg = bwfill(fixExpandImg, 'holes');
-reverseFilledFixExpandImg = 1 - filledFixExpandImg;
 
-[sket_contours, sket_articu_cont, sket_n_contsamp, sket_n_contsamp_of_conn_cont_mat, sket_adjacencyList] = downSampleContour(filledFixExpandImg, 10);
+Contours = downSampleSketCont(strokeSeq);
+[sket_contours, sket_articu_cont, sket_n_contsamp, sket_n_contsamp_of_conn_cont_mat, sket_adjacencyList] = articulateSketContour(Contours, 5);
 [sket_feats] = extractFeature(sket_articu_cont);
 reduced_sket_feats = sket_feats' * eigvector;
 [sket_histogram] = assign_(dictionary, reduced_sket_feats);
