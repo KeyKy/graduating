@@ -70,10 +70,11 @@ for i = 3 : length(files)
     
     %特征提取包括三部分预处理、采样点提取、特征提取
     [image, boundImg, rescaleImg, rescaleBinaryImg, fixExpandImg, filledFixExpandImg] = preprocessProjImage(projImgPath, imgEdgeLength);
-    perimeter = bwperim(filledFixExpandImg); boundries = bwboundaries(perimeter, 'noholes'); eight_conn_pixel_points = extBdPoints(boundries);
+    perimeter = bwperim(filledFixExpandImg);  imshow(perimeter); boundries = bwboundaries(perimeter, 'noholes'); 
+    [eight_conn_pixel_points, n_points_each_boundry] = extBdPoints(boundries);
     
     [Contours, the_articu_cont, the_n_contsamp, the_n_contsamp_of_conn_cont_mat, adjacencyList] = downSampleContour(filledFixExpandImg, sample_step);
-    [the_feats] = extractFeature(the_articu_cont, eight_conn_pixel_points);
+    [the_feats] = extractFeature(the_articu_cont, eight_conn_pixel_points, n_points_each_boundry);
 
     total_feats = [total_feats the_feats];
     total_articu_cont = [total_articu_cont the_articu_cont'];
