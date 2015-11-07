@@ -1,4 +1,4 @@
-function [SC_feats] = extractFeature(articu_cont, eight_conn_pixel_points, n_poins_each_boundry)
+function [SC_feats] = extractFeature(articu_cont, eight_conn_pixel_points, n_poins_each_boundry, fixExpandImg)
 featGlobalVar;
 
 %% 计算 SC 特征(借鉴 IDSC 算法的 bTangent 预处理，使得特征满足 旋转不变性) 
@@ -14,16 +14,15 @@ featGlobalVar;
 %% 计算该点的连通分量的比重(Connected Component Weight)
 [CCW_feats] = compu_contour_CCW(eight_conn_pixel_points, n_poins_each_boundry);
 
-%% 计算傅里叶描述子
+%% 计算傅里叶描述子(Fourier Descriptor)
 [FD_feats] = compu_contour_FD(eight_conn_pixel_points, sizeOfFD);
 
-%% 计算Freeman Chain Code FFC_feats.diffmm是一阶最小值链码差分（1-by-np)
+%% 计算费尔曼链码(Freeman Chain Code)
 [FCC_feats] = compu_contour_FCC(eight_conn_pixel_points);
 
-%% 计算LBP（Local Binary Pattern)
-[LBP_feats] = compu_contour_LBP();
+%% Z矩 统计矩（Zernike Moments)
+[ZM_feats] = compu_contour_ZM(fixExpandImg);
 
-%% Hu矩 统计矩
-
-%% 
+%% 视觉可达性（Visible Connect)
+[VC_feats] = compu_contour_VC(articu_cont, eight_conn_pixel_points);
 end

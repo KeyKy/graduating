@@ -1,5 +1,8 @@
-function drawObj(el){
+function drawObj(el, bg, bi){
 	var j_canvas = document.getElementById(el);
+	var bg_canvas = document.getElementById(bg);
+	var bg_input = document.getElementById(bi);
+	
 	var strokeSequence = '';
 	var point = {};
 	point.notFirst = false;
@@ -118,6 +121,17 @@ function drawObj(el){
 			document.body.appendChild(downloadLink);
 		}
 		downloadLink.click();
+	}
+	this.loadBg = function(){
+        bg_canvas.width = bg_canvas.width;
+        var frontSketchName = bg_input.value;
+		var img = new Image();
+        img.onload = function () {
+            var ctx = bg_canvas.getContext('2d');
+            ctx.globalAlpha = 0.2;
+            ctx.drawImage(img, 0, 0);
+        }
+        img.src = 'sketch/' + frontSketchName;
 	}
 }
 

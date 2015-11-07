@@ -1,7 +1,7 @@
 function  c = compu_contour_FCC(b, conn, dir) 
 %FCHCODE Computes the Freeman chain code of a boundary. 
 %   C = FCHCODE(B) computes the 8-connected Freeman chain code of a 
-%   set of 2-D coordinate pairs contained in B, an np-by-2 array. C 
+%   set of 2-D coordinate pairs contained in b, an np-by-2 array. C 
 %   is a structure with the following fields:  
 % 
 %     c.fcc    = Freeman chain code (1-by-np) 
@@ -117,12 +117,14 @@ a = circshift(b, [-1, 0]);
 % contains the deltax and deltay between (xnr, ynr) and (x1, y1), 
 % (i.e., between the last and first points in b). 
 DEL = a - b; 
- 
+if abs(DEL(end, 1)) > 1 || abs(DEL(end,2) > 1)
+    DEL = DEL(1:end-1, :);
+end
 % If the abs value of either (or both) components of a pair  
 % (deltax, deltay) is greater than 1, then by definition the curve  
 % is broken (or the points are out of order), and the program  
 % terminates. 
-if any(abs(DEL(:, 1)) > 1) | any(abs(DEL(:, 2)) > 1); 
+if any(abs(DEL(1:end, 1)) > 1) | any(abs(DEL(1:end, 2)) > 1); 
    error('The input curve is broken or points are out of order.') 
 end 
  

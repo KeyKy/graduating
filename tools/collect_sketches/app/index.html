@@ -78,13 +78,19 @@
     <div id="wrapper">
       <div id="sidebar-wrapper">
         <canvas id = "test" width="290" height="250"></canvas>
+		<canvas id = "bg" width="290" height="250"></canvas>
+		
 		<form id = "sketchDraw" class="form-inline" role="form">
 			<div class="form-group">
 				<label class="sr-only" for="Model_User_Fid">模型和用户</label>
 				<input type="text" class="form-control" id="Model_User_Fid" placeholder="输入模型_用户_FID">
 			</div>
+			<div style="position: absolute; overflow: hidden; width: 1px; height: 1px; opacity: 0;">
+				<input type="file" id="frontBgInput" name="files[]" multiple="multiple" onchange="fcanvas.loadBg();"/>
+            </div>
 			<button type="button" class="btn btn-xs btn-primary" onclick="fcanvas.save();">保存草图</button>
 			<button type="button" class="btn btn-xs btn-default" onclick="fcanvas.clear();">清空面板</button>
+			<button type="button" class="btn btn-xs btn-primary" onclick="$('#frontBgInput').click();">加载背景图</button>
 		</form>
       </div>
     </div>
@@ -120,7 +126,7 @@
   </script>
   <script>
 	var fcanvas;
-	fcanvas = new drawObj('test');
+	fcanvas = new drawObj('test', 'bg', 'frontBgInput');
   </script>
 </body>
 </html>

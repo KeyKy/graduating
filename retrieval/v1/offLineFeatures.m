@@ -70,11 +70,12 @@ for i = 3 : length(files)
     
     %特征提取包括三部分预处理、采样点提取、特征提取
     [image, boundImg, rescaleImg, rescaleBinaryImg, fixExpandImg, filledFixExpandImg] = preprocessProjImage(projImgPath, imgEdgeLength);
-    perimeter = bwperim(filledFixExpandImg);  imshow(perimeter); boundries = bwboundaries(perimeter, 'noholes'); 
-    [eight_conn_pixel_points, n_points_each_boundry] = extBdPoints(boundries);
+    perimeter = bwperim(filledFixExpandImg);  boundries = bwboundaries(perimeter, 'noholes'); %boundries是N-by-2的数据结构，其中列1是行号，列2是列号
+    [eight_conn_pixel_points, n_points_each_boundry] = extBdPoints(boundries); % eight_conn_pixel_points是N-by-2的数据结构，其中列1是列号，列2是行号
     
     [Contours, the_articu_cont, the_n_contsamp, the_n_contsamp_of_conn_cont_mat, adjacencyList] = downSampleContour(filledFixExpandImg, sample_step);
-    [the_feats] = extractFeature(the_articu_cont, eight_conn_pixel_points, n_points_each_boundry);
+    the_articu_cont(:,2) = imgEdgeLength - the_articu_cont(:,2); %将坐标系转为图像的坐标系，左上角为原点，the_articu_cont原本是N-by-2的数据结构，其中第2列是坐标y
+    [the_feats] = extractFeature(the_articu_cont, eight_conn_pixel_points, n_points_each_boundry, fixExpandImg);
 
     total_feats = [total_feats the_feats];
     total_articu_cont = [total_articu_cont the_articu_cont'];
