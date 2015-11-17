@@ -1,14 +1,15 @@
-function [articu_cont, n_contsamp, n_contsamp_of_conn_cont_mat, adjacencyList] = articulateSketContour( Contours, samp_step_length )
+function [articu_cont, n_contsamp, n_contsamp_of_conn_cont_mat, adjacencyList, total_cont] = articulateSketContour( Contours, samp_step_length )
 articu_cont = []; 
 n_contsamp = 0;
 n_contsamp_of_conn_cont_mat = zeros(length(Contours), 1);
 adjacencyList = [];
-
+total_cont = [];
 for conn_cont_idx = 1 : length(Contours)
     the_articu_cont = Contours{conn_cont_idx}';
+    total_cont = [total_cont the_articu_cont'];
     
-    [min_v,id]	= min(the_articu_cont(:,2)+the_articu_cont(:,1));
-    the_articu_cont		= circshift(the_articu_cont,[length(the_articu_cont)-id+1]);
+    %[min_v,id]	= min(the_articu_cont(:,2)+the_articu_cont(:,1));
+    %the_articu_cont		= circshift(the_articu_cont,[length(the_articu_cont)-id+1]);
     
     % 通过采样前contour长度，以及samp_step_length采样步长参数，来计算对于该轮廓合适的采样点总数
     [redundancy_removed_cur_cont_length  col_size] = size(the_articu_cont);

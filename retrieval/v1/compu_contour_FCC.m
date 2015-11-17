@@ -92,7 +92,11 @@ if isequal(b(1, :), b(np, :))
    np = np - 1; 
    b = b(1:np, :); 
 end 
- 
+
+if size(b, 1) == 1
+    c.diffmm = [];
+    return;
+end
 % Build the code table using the single indices from the formula  
 % for z given above: 
 C(11)=0; C(7)=1; C(6)=2; C(5)=3; C(9)=4; 
@@ -124,7 +128,8 @@ end
 % (deltax, deltay) is greater than 1, then by definition the curve  
 % is broken (or the points are out of order), and the program  
 % terminates. 
-if any(abs(DEL(1:end, 1)) > 1) | any(abs(DEL(1:end, 2)) > 1); 
+
+if any(abs(DEL(1:end, 1)) > 1) || any(abs(DEL(1:end, 2)) > 1); 
    error('The input curve is broken or points are out of order.') 
 end 
  

@@ -1,14 +1,17 @@
-function [ rank ] = onLineRetrieval( sketchOrPath, strokeSeq )
+function [ rank ] = M0_onLineRetrieval( sketchOrPath, strokeSeq )
 if ~exist('sketchOrPath', 'var')
     sketchOrPath = 'E:\graduating\data\sket1.png';
+    fid = fopen('E:\graduating\data\sket1.txt');
+    strokeSeq = fgetl(fid);
+    fclose(fid);
 end
 
 if isstr(sketchOrPath)
     [~,~,sketch] = imread(sketchOrPath);
 end
 
-load 'E:\\graduating\\data\\dictionary.mat' dictionary 
-load 'E:\\graduating\\data\\eigvector.mat' eigvector 
+load 'F:\\graduating\\data\\dictionary.mat' dictionary 
+load 'F:\\graduating\\data\\eigvector.mat' eigvector 
 
 conn = database('SDDB', 'kangy1', '123456');
 if strcmp(conn.AutoCommit, 'on') ~= 1         % 如果未正常连接，则报错并终止程序
@@ -44,12 +47,14 @@ rescaleBinaryImg = imageRescaledBinaryzation(rescaleImg, 0.8);
 fixExpandImg = imageBoundaryExpandFixSize(rescaleBinaryImg, 200, 200);
 
 Contours = downSampleSketCont(strokeSeq);
-[sket_contours, sket_articu_cont, sket_n_contsamp, sket_n_contsamp_of_conn_cont_mat, sket_adjacencyList] = articulateSketContour(Contours, 5);
+[sket_articu_cont, sket_n_contsamp, sket_n_contsamp_of_conn_cont_mat, sket_adjacencyList] = articulateSketContour(Contours, 5);
+plot(sket_articu_cont(:,1), sket_articu_cont(:,2), '.');
 [sket_feats] = extractFeature(sket_articu_cont);
 reduced_sket_feats = sket_feats' * eigvector;
+%reduced_sket_feats = sket_feats';
 [sket_histogram] = assign_(dictionary, reduced_sket_feats);
 
-distance = []; options.method = 'cosine';
+distance = []; options.method = 'euclidean';
 for model_idx = 1 : length(models)
     distance = [distance calcDist(models{model_idx}.bofFeat, sket_histogram, options)];
 end
