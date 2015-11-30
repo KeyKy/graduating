@@ -57,10 +57,6 @@ for conn_cont_idx = 1 : length(Contours)
     n_contsamp = n_contsamp + num_of_samp_pts;
 end
 
-%for i = 1 : length(articu_cont)
-%    plot(articu_cont(i,1), 250 - articu_cont(i,2), '.'); hold on;
-%    text(articu_cont(i,1), 250 - articu_cont(i,2), num2str(i)); hold on;
-%end
 
 end
 

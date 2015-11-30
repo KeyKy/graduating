@@ -1,7 +1,7 @@
 function [ rank ] = M4_recomRetrivalByModelSim( sketchOrPath, strokeSeq, userName )
 if ~exist('sketchOrPath', 'var')
-    sketchOrPath = 'F:\sketch\total\m355_kangyang_0.png';  %输入手绘图
-    fid = fopen('F:\sketch\total\m355_kangyang_0.txt');    %输入手绘图的Txt文件
+    sketchOrPath = 'F:\sketch\total\m495_kangyang_0.png';  %输入手绘图
+    fid = fopen('F:\sketch\total\m495_kangyang_0.txt');    %输入手绘图的Txt文件
     strokeSeq = fgetl(fid);
     fclose(fid);
     userName = 'kangyang';  %输入用户名
@@ -27,15 +27,18 @@ fixExpandImg = imageBoundaryExpandFixSize(rescaleBinaryImg, 200, 200);
 Contours = downSampleSketCont(strokeSeq);
 
 [sket_articu_cont, sket_n_contsamp, sket_n_contsamp_of_conn_cont_mat, sket_adjacencyList] = articulateSketContour(Contours, 5);
-plot(sket_articu_cont(:,1), 200 - sket_articu_cont(:,2), '.');
+%[points] = selectPointsUI(image, sket_articu_cont);
+%[sket_articu_cont] = interestPoints(points);
+%sket_articu_cont(:,2) = 200 - sket_articu_cont(:,2);
+
 
 [sket_feats] = extractFeature(sket_articu_cont);
 reduced_sket_feats = sket_feats' * eigvector;
 [sket_histogram] = assign_(dictionary, reduced_sket_feats); %提取手绘图的直方图特征
 
-distance = 9999 * ones(1,2000); options.method = 'euclidean';
+distance = 9999 * ones(1,length(all_total_model_struct)); options.method = 'euclidean';
 for model_idx = 1 : length(all_total_model_struct)
-    if model_idx == 282
+    if model_idx == 4
         e = 123;
     end
     if userSketInfos.isKey(userName)               %判断当前用户是否是新用户
@@ -78,6 +81,7 @@ for model_idx = 1 : length(all_total_model_struct)
                 the_histogram = the_most_sim_model_drawCell{the_uid}{1}.the_histogram;
                 need_calc_histogram = [need_calc_histogram; the_histogram];
             end
+            
             %need_calc_histogram = [];
             
             n_recom = size(need_calc_histogram, 1);

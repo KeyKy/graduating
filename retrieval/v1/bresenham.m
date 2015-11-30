@@ -9,7 +9,7 @@ y1 = -y1; y2 = -y2;
 %               (x2,y2): End position
 %
 %Output:
-%               x y: the line coordinates from (x1,y1) to (x2,y2)
+%               x y: the line coordinates (image coordinates) from (x1,y1) to (x2,y2)
 %
 %Usage example:
 %               [x y]=bham(1,1, 10,-5);

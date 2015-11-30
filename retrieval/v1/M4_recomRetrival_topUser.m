@@ -1,4 +1,4 @@
-function [ rank ] = M4_recomRetrival_v2( sketchOrPath, strokeSeq, userName )
+function [ rank ] = M4_recomRetrival_topUser( sketchOrPath, strokeSeq, userName )
 if ~exist('sketchOrPath', 'var')
     sketchOrPath = 'F:\sketch\total\m531_kangyang_0.png';  %输入手绘图
     fid = fopen('F:\sketch\total\m531_kangyang_0.txt');    %输入手绘图的Txt文件

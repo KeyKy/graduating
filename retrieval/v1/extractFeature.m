@@ -1,4 +1,4 @@
-function [SC_feats] = extractFeature(articu_cont, eight_conn_pixel_points, n_poins_each_boundry, fixExpandImg)
+function [SC_feats, AED_feats, S2MC_feats] = extractFeature(articu_cont, fixExpandImg, eight_conn_pixel_points, n_poins_each_boundry)
 featGlobalVar;
 
 %% 计算 SC 特征(借鉴 IDSC 算法的 bTangent 预处理，使得特征满足 旋转不变性) 
@@ -6,10 +6,10 @@ featGlobalVar;
 [SC_feats, euclid_dist_mat, ang_mat] = compu_contour_SC( articu_cont, n_dist, n_theta, bTangent);
 
 %% 计算平均欧式距离、均方欧式距离、欧氏距离方差和第10、第20、...第90分为点的距离值作为12维特征向量。
-%[AED_feats] = compu_contour_AED(euclid_dist_mat, n_contsamp);
+[AED_feats] = compu_contour_AED(euclid_dist_mat);
 
 %% 计算每个点到质心的距离(Samples To Mass Center)
-%[S2MC_feats] = compu_contour_S2MC(articu_cont);
+[S2MC_feats] = compu_contour_S2MC(articu_cont);
 
 %% 计算该点的连通分量的比重(Connected Component Weight)
 %[CCW_feats] = compu_contour_CCW(eight_conn_pixel_points, n_poins_each_boundry);
