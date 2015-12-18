@@ -17,7 +17,7 @@ Corner = Image;
 
 CRF = zeros(nrow, ncol);
 CRFmax = 0;
-k = harris_k; boundary = 2;
+k = harris_k; boundary = 4;
 for i = boundary : nrow-boundary+1
     for j = boundary : ncol-boundary+1
         if Corner(i,j) == 1

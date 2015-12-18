@@ -16,7 +16,7 @@ for conn_cont_idx = 1 : length(Contours)
     cur_conn_comp_n_contsamp =  round(redundancy_removed_cur_cont_length / samp_step_length);   % 该段的大致目标采样点数预估，注意四舍五入取整
     
     % -------------- Downsampling contour
-    if cur_conn_comp_n_contsamp < 3       % 当该段去冗余轮廓线有3个或以上采样点数时，才进行均匀采样(加此限制能有效去除视图中的离散噪声点)，否则直接丢弃不采样
+    if cur_conn_comp_n_contsamp < 2       % 当该段去冗余轮廓线有3个或以上采样点数时，才进行均匀采样(加此限制能有效去除视图中的离散噪声点)，否则直接丢弃不采样
         continue;
     end
     [XIs,YIs]	= uniform_interp(the_articu_cont(:,1), the_articu_cont(:,2), cur_conn_comp_n_contsamp - 1);   %均匀采样

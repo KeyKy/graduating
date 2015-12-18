@@ -3,8 +3,7 @@ import math
 import matplotlib.pyplot as plt
 import scipy.io
 
-side_length = 512
-line_width  = 0.02
+line_width  = 0.015
 lamb        = 0.2
 w           = 0.13
 
@@ -21,8 +20,8 @@ for theta_index in range(num_thetas):
     
     R = numpy.array([[math.cos(theta), -math.sin(theta)], [math.sin(theta), math.cos(theta)]])
     
-    u = numpy.arange(-100, 100)
-    v = numpy.arange(-100, 100)
+    u = numpy.arange(-145, 145)
+    v = numpy.arange(-125, 125)
     
     (U, V) = numpy.meshgrid(u, v)
     

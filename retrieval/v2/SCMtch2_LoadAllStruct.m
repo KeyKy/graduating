@@ -11,9 +11,14 @@ for i = 3 : length(files)
         the_fileName = the_total_struct{j}.the_fileName;
         the_feats = the_total_struct{j}.the_feats;
         the_articu_cont = the_total_struct{j}.the_articu_cont;
+        the_corner = the_total_struct{j}.the_corner;
+        the_corner_feats = the_total_struct{j}.the_corner_feats;
+        
         tmp.the_fileName = the_fileName;
         tmp.the_feats = the_feats;
         tmp.the_articu_cont = the_articu_cont;
+        tmp.the_corner = the_corner;
+        tmp.the_corner_feats = the_corner_feats;
         total_struct{end+1} = tmp;
     end
 end

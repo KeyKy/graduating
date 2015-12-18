@@ -1,10 +1,12 @@
 function [  ] = SCMtch2_GenAllModelStruct(  )
 
-load 'F:\\SCDict_unRota\\20\\total_struct.mat' total_struct
+load 'F:\\SCDict_unRota\\25\\total_struct.mat' total_struct
 all_total_model_struct = cell(1,1815);
 tmp.viewName = cell(1,0);
 tmp.the_feats = cell(1,0);
 tmp.the_articu_cont = cell(1,0);
+tmp.the_corner = cell(1,0);
+tmp.the_corner_feats = cell(1,0);
 for i = 1 : 1815
     all_total_model_struct{i} = tmp;
 end
@@ -16,10 +18,15 @@ for i = 1 : length(total_struct)
     viewName = sprintf('%s_%s',splited{2}, splited{3}(1:end-4));
     feats = the_struct.the_feats;
     the_articu_cont = the_struct.the_articu_cont;
+    the_corner = the_struct.the_corner;
+    the_corner_feats = the_struct.the_corner_feats;
+    
     all_total_model_struct{modelIdx+1}.viewName = [all_total_model_struct{modelIdx+1}.viewName viewName];
     all_total_model_struct{modelIdx+1}.the_feats = [all_total_model_struct{modelIdx+1}.the_feats feats];
     all_total_model_struct{modelIdx+1}.the_articu_cont = [all_total_model_struct{modelIdx+1}.the_articu_cont the_articu_cont];
+    all_total_model_struct{modelIdx+1}.the_corner = [all_total_model_struct{modelIdx+1}.the_corner the_corner];
+    all_total_model_struct{modelIdx+1}.the_corner_feats = [all_total_model_struct{modelIdx+1}.the_corner_feats the_corner_feats];
 end
-save 'F:\\SCDict_unRota\\20\\all_total_model_struct.mat' all_total_model_struct
+save 'F:\\SCDict_unRota\\25\\all_total_model_struct.mat' all_total_model_struct
 end
 

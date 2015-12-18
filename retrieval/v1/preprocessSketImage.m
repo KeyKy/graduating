@@ -1,5 +1,5 @@
 function [ proc_img ] = preprocessSketImage( Image )
-globalVal;
+globalVar;
 
 image = csToMatlab(Image);
 boundImg = imageBoxBounding(image);

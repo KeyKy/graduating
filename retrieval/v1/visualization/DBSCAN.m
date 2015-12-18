@@ -37,7 +37,7 @@
 % December 2004
 % http://www.chemometria.us.edu.pl
 
-function [class,type]=dbscan(x,k,Eps)
+function [class,type]=DBSCAN(x,k,Eps)
 
 [m,n]=size(x);
 
