@@ -1,4 +1,5 @@
 function [ ] = sketchToken_vFeat( )
+%仅适合我们自己搜集的数据
 load 'F:\SCRecomDict\10\sketchInfos.mat' sketchInfos
 [ kernel ] = gaborKernelLoad();
 infosStruct = sketchInfos;

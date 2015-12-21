@@ -1,12 +1,12 @@
 function [ ] = cornerPointsSCMatchingWithSket( )
 addpath('E:\graduating\retrieval\v1\');
-sketch_png_path = 'F:\sketch\total\m9_y8_0.png'; sketch_txt_path = 'F:\sketch\total\m9_y8_0.txt';
+sketch_png_path = 'F:\sketch\total\m507_y7_0.png'; sketch_txt_path = 'F:\sketch\total\m507_y7_0.txt';
 
 [sketch, strokeSeq] = loadSketch(sketch_png_path, sketch_txt_path); [~,~,image1] = imread(sketch_png_path);
 [fixExpandImg, sket_articu_cont] = preproc_extractCont(sketch, strokeSeq);
 [sket_feats, sket_dist_mat, sket_ang_mat] = extractFeature(sket_articu_cont);
 
-sketch2_png_path = 'F:\sketch\total\m9_y9_0.png'; sketch2_txt_path = 'F:\sketch\total\m9_y9_0.txt';
+sketch2_png_path = 'F:\sketch\total\m508_y7_0.png'; sketch2_txt_path = 'F:\sketch\total\m508_y7_0.txt';
 [sketch2, strokeSeq2] = loadSketch(sketch2_png_path, sketch2_txt_path);  [~,~,image2] = imread(sketch2_png_path);
 [fixExpandImg2, sket_articu_cont2] = preproc_extractCont(sketch2, strokeSeq2); 
 [sket_feats2] = extractFeature(sket_articu_cont2);
@@ -68,7 +68,7 @@ end
 
 fig5 = figure(5); imshow(1 - bwImg1); hold on;
 for i = 1 : size(sket_articu_cont,1)
-    plot(sket_articu_cont(i,1), sket_articu_cont(i,2), 'k.'); hold on;
+    plot(sket_articu_cont(i,1), sket_articu_cont(i,2), 'g.'); hold on;
     text(sket_articu_cont(i,1), sket_articu_cont(i,2), num2str(i), 'Color', 'red'); hold on;
 end
 fig6 = figure(6); imshow(255 - image2); hold on; 

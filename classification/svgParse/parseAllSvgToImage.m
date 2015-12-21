@@ -3,6 +3,7 @@ function [ filed ] = parseAllSvgToImage( D )
 filed = [];
 for i = 1 : size(D,1);
     try
+    disp(i);
     totalStroke = parseOneSvgToPts(D{i,3});
 %     for j = 1 : length(totalStroke)
 %         max_tmp = max(max(totalStroke{j}));
@@ -12,7 +13,7 @@ for i = 1 : size(D,1);
 %     end
     [outImage] = drawSvgImage(totalStroke);
     imwrite(outImage, sprintf('D:\\svgToImage\\%d.png',i));
-    disp(i);
+    
     catch
         filed = [filed i];
     end

@@ -5,8 +5,8 @@ for i = 1 : length(bezierCurveData)
     tradjCell{end+1} = parsePathLine( bezierCurveData{i} );
 end
 f = tradjCell;
-t1 = linspace(0,1,101);
-% t2 = linspace(0,1,3);
+t1 = linspace(0,1,10);
+t2 = linspace(0,1,2);
 totalStroke = {};
 for i = 1 : length(f)
     oneStroke = [];
@@ -28,18 +28,21 @@ for i = 1 : length(f)
                 control_point1 = [str2num(splited{j}(2:end)); -str2num(splited{j+1}(1:end))];
                 control_point2 = [str2num(splited{j+2}(1:end)); -str2num(splited{j+3}(1:end))];
                 end_point = [str2num(splited{j+4}(1:end)); -str2num(splited{j+5}(1:end))];
-%                 if sum((bpoints - end_point).^2) < 300
-%                     t = t2;
-%                 end
+                if sqrt(sum((bpoints - end_point).^2)) < 15
+                    t = t2;
+                end
                 pts = kron((1-t).^3,bpoints) + kron(3*(1-t).^2.*t,control_point1) + kron(3*(1-t).*t.^2,control_point2) + kron(t.^3,end_point);
-                %plot(pts(1,:), pts(2,:), 'r.'); hold on;
+%                 plot(pts(1,:), pts(2,:), 'r.'); hold on;
                 oneStroke = [oneStroke [pts(1,:);-pts(2,:)]];
                 j = j+6;
                 bpoints = end_point;
             case 'L'
                 end_point = [str2num(splited{j}(2:end)); -str2num(splited{j+1}(1:end))];
+                if sqrt(sum((bpoints - end_point).^2)) < 15
+                    t = t2;
+                end
                 pts = kron( (1-t), bpoints) + kron( t, end_point);
-                %plot(pts(1,:), pts(2,:), 'r.'); hold on;
+%                 plot(pts(1,:), pts(2,:), 'r.'); hold on;
                 oneStroke = [oneStroke [pts(1,:);-pts(2,:)]];
                 j = j + 2;
                 bpoints = end_point;
@@ -47,7 +50,10 @@ for i = 1 : length(f)
                 error(subStokType);
         end
     end
-    totalStroke{end+1,1} = round(oneStroke+1);
+    oneStroke(3,:) = zeros(1,size(oneStroke,2));
+    oneStroke = (oneStroke+1);
+    oneStroke = transformStruct{3}.matrix * (transformStruct{2}.matrix * (transformStruct{1}.matrix * oneStroke));
+    totalStroke{end+1,1} = round(oneStroke(1:2,:));
 end
 
 end
@@ -107,6 +113,17 @@ function [ transformStruct ] = parseTransformLine( transformData )
         parms = tmp2{1};
         transStruct.transformName = transformName;
         transStruct.parms = parms;
+        switch transformName
+            case 'translate'
+                splt = splitStr(parms, ',');
+                matrix = [1 0 str2num(splt{1});0 1 str2num(splt{2}); 0 0 1];
+                transStruct.matrix = matrix;
+            case 'scale'
+                matrix = [str2num(parms) 0 0; 0 str2num(parms) 0; 0 0 1];
+                transStruct.matrix = matrix;
+            otherwise
+                error('transform error');
+        end
         transformStruct{end+1} = transStruct;
     end
 end

@@ -1,5 +1,5 @@
 function [ outImage ] = drawSvgImage( totalStroke )
-outImage = zeros(800,800);
+outImage = zeros(2000,2000);
 for i = 1 : length(totalStroke)
     outr = totalStroke{i};
     for j = 1 : size(outr, 2) - 1

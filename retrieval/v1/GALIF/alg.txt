@@ -1,5 +1,0 @@
-1. load sketchInfos
-2. 对每一个sketchInfo先读取图片用所有方向的Gabor对其卷积得到响应图。
-3. 分别对每一个sketchInfo的响应图的每一个采样点取出36*36的像素块，计算GALIF特征
-4. 即每一个像素点都有一个GALIF特征，存到sketchInfos里面存到相应目录下。
-5. 取出所有的草绘图像素点的GALIF特征聚类形成sketch Token
